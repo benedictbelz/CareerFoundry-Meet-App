@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 
 class Event extends Component {
 
-    constructor() {
-        super();
-        this.state = {
-            showDetails: false
-        }
+    state = {
+        showDetails: false
     }
 
     handleClick() {
@@ -17,15 +14,16 @@ class Event extends Component {
     }
 
 	render() {
+        //const { event: { location, description, htmlLink, summary, start, end }} = this.props;
 		return (
             <div className='event'>
-                <button 
-                    className='showDetails'
-                    onClick={() => this.handleClick()}
-                >Show Details</button>
-                <div className='details'>
-                    More Details...
+                <div className='overview'>
+                    {/* <div className='title'>{summary}</div>
+                    <div className='location'>{location}</div> */}
                 </div>
+                <button className='showDetails' onClick={() => this.handleClick()}>
+                    Show Details
+                </button>
             </div>
         );
 	}

@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 
 class NumberOfEvents extends Component {
 
-    constructor() {
-        super();
-        this.state = {
-            query: ''
-        }
+    state = {
+        query: ''
     }
 
     handleInput = event => {
