@@ -1,5 +1,4 @@
-const {google} = require('googleapis');
-const OAuth2 = google.auth.OAuth2;
+const { google } = require('googleapis');
 const calendar = google.calendar('v3');
 const scopes = ['https://www.googleapis.com/auth/calendar.readonly'];
 
@@ -12,10 +11,7 @@ const credentials = {
 	token_uri: 'https://oauth2.googleapis.com/token',
 	auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
 	redirect_uris: ['https://benedictbelz.github.io/meet/'],
-	javascript_origins: [
-		'https://benedictbelz.github.io',
-		'http://localhost:3000',
-	],
+	javascript_origins: ['https://benedictbelz.github.io', 'http://localhost:3000',]
 };
 
 const {client_secret, client_id, redirect_uris, calendar_id} = credentials;
@@ -35,7 +31,7 @@ module.exports.getAuthURL = async () => {
 	return {
 		statusCode: 200,
 		headers: {
-			"Access-Control-Allow-Origin": "*",
+			'Access-Control-Allow-Origin': '*'
 		},
 		body: JSON.stringify({
 			authUrl: authUrl,
@@ -53,15 +49,17 @@ module.exports.getAccessToken = async (event) => {
 	const code = decodeURIComponent(`${event.pathParameters.code}`);
 
 	return new Promise((resolve, reject) => {	
-			oAuth2Client.getToken(code, (error, token) => {
-				if (error)
-					return reject(error);
-				return resolve(token);
-			});
-	  	})
+		oAuth2Client.getToken(code, (error, token) => {
+			if (error) return reject(error);
+			return resolve(token);
+		});
+	})
 		.then(token => {
 			return {
 				statusCode: 200,
+				headers: {
+					'Access-Control-Allow-Origin': '*'
+				},
 				body: JSON.stringify(token),
 			};
 		})
@@ -102,7 +100,7 @@ module.exports.getCalendarEvents = async (event) => {
 			return {
 				statusCode: 200,
 				headers: {
-					"Access-Control-Allow-Origin": "*"
+					'Access-Control-Allow-Origin': '*'
 				},
 				body: JSON.stringify({ events: results.data.items }),
 			};
@@ -111,6 +109,9 @@ module.exports.getCalendarEvents = async (event) => {
 			console.error(error);
 			return {
 				statusCode: 500,
+				headers: {
+					'Access-Control-Allow-Origin': '*'
+				},
 				body: JSON.stringify(error),
 			};
 		});

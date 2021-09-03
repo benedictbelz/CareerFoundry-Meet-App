@@ -3,20 +3,24 @@ import React, { Component } from 'react';
 class NumberOfEvents extends Component {
 
     state = {
-        query: ''
+        number: this.props.number
     }
 
     handleInput = event => {
-        this.setState({ query: event.target.value });
+        let number = event.target.value;
+        this.setState({ number })
+        if (number < 0 || number > 32)
+            this.props.updateNumber(32);
+        else
+            this.props.updateNumber(number);
     }
 
 	render() {
 		return (
-            <div className='numberOfEvents'>
+            <div id='NumberOfEvents'>
                 <input 
-                    type='text'
-                    className='numberOfEventsInput'
-                    value={this.state.query}
+                    type='number'
+                    value={this.state.number}
                     onChange={this.handleInput}
                 />
             </div>

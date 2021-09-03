@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { mockData } from '../mock-data';
 import { extractLocations, getEvents } from '../api';
-import App from '../App';
+import App from '../components/App';
 import EventList from '../components/EventList'
 import CitySearch from '../components/CitySearch'
 import NumberOfEvents from '../components/NumberOfEvents';
@@ -44,6 +44,14 @@ describe('<App /> integration', () => {
         AppWrapper.unmount();
     });
 
+    test('App passes "number" state as a prop to NumberOfEvents', () => {
+        const AppWrapper = mount(<App />);
+        const AppNumberState = AppWrapper.state('number');
+        expect(AppNumberState).not.toEqual(undefined);
+        expect(AppWrapper.find(NumberOfEvents).props().number).toEqual(AppNumberState);
+        AppWrapper.unmount();
+    });
+
     test('get list of events matching the city selected by the user', async () => {
         const AppWrapper = mount(<App />);
         const CitySearchWrapper = AppWrapper.find(CitySearch);
@@ -66,5 +74,25 @@ describe('<App /> integration', () => {
         const allEvents = await getEvents();
         expect(AppWrapper.state('events')).toEqual(allEvents);
         AppWrapper.unmount();
+    });
+
+    test('get correct number of events matching the input by the user', async () => {
+        const AppWrapper = mount(<App />);
+        const NumberOfEventsWrapper = AppWrapper.find(NumberOfEvents);
+        const value = { target: { value: 2 }};
+        await NumberOfEventsWrapper.instance().handleInput(value);
+        expect(NumberOfEventsWrapper.state('number')).toEqual(2);
+        expect(AppWrapper.state('number')).toEqual(2);
+        expect(AppWrapper.state('events').length).toEqual(2);
+    });
+
+    test('get correct number of events when incorrect input by the user', async () => {
+        const AppWrapper = mount(<App />);
+        const NumberOfEventsWrapper = AppWrapper.find(NumberOfEvents);
+        const value = { target: { value: -5 }};
+        await NumberOfEventsWrapper.instance().handleInput(value);
+        expect(NumberOfEventsWrapper.state('number')).toEqual(-5);
+        expect(AppWrapper.state('number')).toEqual(32);
+        expect(AppWrapper.state('events').length).toEqual(32);
     });
 });

@@ -9,22 +9,26 @@ class CitySearch extends Component {
 	}
 
 	handleInput = event => {
-		const value = event.target.value;
-        const suggestions = this.props.locations.filter(location => location.toUpperCase().indexOf(value.toUpperCase()) > -1);
+		let value = event.target.value;
+        let suggestions = this.props.locations.filter(location => location.toUpperCase().indexOf(value.toUpperCase()) > -1);
 		this.setState({ query: value,  suggestions });
 	}
 
     handleClick = suggestion => {
-        this.setState({ query: suggestion, showSuggestions: false });
 		this.props.updateEvents(suggestion);
+		if (suggestion === 'all')
+			this.setState({ query: '', showSuggestions: false });
+		else
+        	this.setState({ query: suggestion, showSuggestions: false });
     }
 
 	render() {
 		return (
-			<div className="CitySearch">
+			<div id="CitySearch">
 				<input
 					type="text"
 					className="city"
+					placeholder="Search for cities"
 					value={this.state.query}
 					onChange={this.handleInput}
 					onFocus={() => this.setState({ showSuggestions: true })}

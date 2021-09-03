@@ -6,22 +6,20 @@ describe('<EventList /> component', () => {
     let NumberOfEventsWrapper;
 
     beforeAll(() => {
-        NumberOfEventsWrapper = shallow(<NumberOfEvents />);
+        NumberOfEventsWrapper = shallow(<NumberOfEvents number={32} updateNumber={() => {}}/>);
     });
 
 	test('render text input', () => {
-        expect(NumberOfEventsWrapper.find('.numberOfEventsInput')).toHaveLength(1);
+        expect(NumberOfEventsWrapper.find('input')).toHaveLength(1);
     });
 
-    test('render text input correcty', () => {
-        const query = NumberOfEventsWrapper.state('query');
-        expect(NumberOfEventsWrapper.find('.numberOfEventsInput').prop('value')).toBe(query);
+    test('render text input correcty', async () => {
+        expect(NumberOfEventsWrapper.find('input').prop('value')).toBe(32);
     });
 
     test('change state when text input changes', () => {
-        NumberOfEventsWrapper.setState({ query: '5' });
-        const eventObject = { target: { value: '2' }};
-        NumberOfEventsWrapper.find('.numberOfEventsInput').simulate('change', eventObject);
-        expect(NumberOfEventsWrapper.state('query')).toBe('2');
-      });
+        const value = { target: { value: 2 }};
+        NumberOfEventsWrapper.find('input').simulate('change', value);
+        expect(NumberOfEventsWrapper.state('number')).toBe(2);
+    });
 });

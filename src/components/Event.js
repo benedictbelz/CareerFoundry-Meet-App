@@ -6,6 +6,10 @@ class Event extends Component {
         showDetails: false
     }
 
+    convertDate(date) {
+        return new Date(date).toString().slice(3, 21);
+    }
+
     handleClick() {
         if (!this.state.showDetails)
             this.setState({ showDetails: true });
@@ -14,15 +18,16 @@ class Event extends Component {
     }
 
 	render() {
-        //const { event: { location, description, htmlLink, summary, start, end }} = this.props;
+        const { event: { location, description, htmlLink, summary, start, end }} = this.props;
 		return (
-            <div className='event'>
+            <div className='Event'>
                 <div className='overview'>
-                    {/* <div className='title'>{summary}</div>
-                    <div className='location'>{location}</div> */}
+                    <div className='title'>{summary}</div>
+                    <div className='location'>{this.convertDate(start.dateTime)}</div>
+                    <div className='location'>{summary + ' | ' + location}</div>
                 </div>
                 <button className='showDetails' onClick={() => this.handleClick()}>
-                    Show Details
+                    Show More
                 </button>
             </div>
         );
