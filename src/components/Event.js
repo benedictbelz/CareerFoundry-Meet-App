@@ -26,6 +26,11 @@ class Event extends Component {
                     <div className='location'>{this.convertDate(start.dateTime)}</div>
                     <div className='location'>{summary + ' | ' + location}</div>
                 </div>
+                {this.state.showDetails &&
+                    <div className='details'>
+                
+                    </div>
+                }
                 <button className='showDetails' onClick={() => this.handleClick()}>
                     Show More
                 </button>
