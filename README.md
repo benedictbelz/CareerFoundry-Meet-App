@@ -1,5 +1,7 @@
 # Meet
 
+![Alt text](public/application.png?raw=true "Meet")
+
 ## Description
 
 Meet -  A serverless, progressive web application with React using test-driven development techniques.
