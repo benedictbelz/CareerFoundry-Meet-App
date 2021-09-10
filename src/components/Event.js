@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Modal from './Modal'
 
 class Event extends Component {
 
@@ -18,19 +19,15 @@ class Event extends Component {
     }
 
 	render() {
-        const { event: { location, description, htmlLink, summary, start, end }} = this.props;
+        const { event: { location, summary, start }} = this.props;
 		return (
             <div className='Event'>
                 <div className='overview'>
                     <div className='title'>{summary}</div>
-                    <div className='location'>{this.convertDate(start.dateTime)}</div>
+                    <div className='date'>{this.convertDate(start.dateTime)}</div>
                     <div className='location'>{summary + ' | ' + location}</div>
                 </div>
-                {this.state.showDetails &&
-                    <div className='details'>
-                
-                    </div>
-                }
+                {this.state.showDetails && <Modal closeModal={() => this.setState({ showDetails: false })} {...this.props}/>}
                 <button className='showDetails' onClick={() => this.handleClick()}>
                     Show More
                 </button>
