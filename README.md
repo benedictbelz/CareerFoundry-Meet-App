@@ -22,4 +22,4 @@ Build a serverless, progressive web application with React using a test-driven d
 
 ## Installation
 
-Download the folder and install the packages via 'npm install'. Afterwards, build the app via 'npm run build' and start it with 'npm start'. Once bundled up, it will serve the file on port 3000.
+Download the folder and install the packages via `npm install`. Afterwards, build the app via `npm run build` and start it with `npm start`. Once bundled up, it will serve the file on port 3000.
